@@ -1,0 +1,9 @@
+.card.border-glow {
+    box-shadow: 0 0 10px rgb(241, 241, 241);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .card.border-glow:hover {
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+  }
+  

@@ -1,0 +1,20 @@
+<app-nav></app-nav>
+<div class="container-md-fluid container-sm">
+  <div class="row mb-4 pb-2">
+    <div class="col-md-12 col-sm-12 mx-auto col-lg-10 font-weight-bold">
+      <h1 class="text-center">MY BOOKINGS</h1>
+      <div class="mt-5" *ngFor="let movie of movies">
+        <div class="card border-glow">
+          <div class="card-header">{{movie.movie_name}} <i class="fa fa-film text-primary" aria-hidden="true"></i><span class="float-right"><i class="fa fa-calendar text-primary" aria-hidden="true"></i> {{movie.movie_date | date:'mediumDate'}}</span></div>
+          <div class="card-body text-capitalize d-flex justify-content-md-between flex-column flex-md-row">
+            <span>Seat:{{movie.seat}}</span>
+            <span>Total:{{movie.total_amount}}</span>
+            <span>Booked:{{movie.count}}</span>
+            <span>Language:{{movie.language}}</span>
+            <a href="" class="btn btn-danger" [routerLink]="['/pdf-booking',movie.id]" (click)="DownloadPdf()"> <i class="fa fa-file-pdf " aria-hidden="true"></i> Download Ticket</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

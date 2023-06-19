@@ -1,0 +1,79 @@
+<app-nav></app-nav>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-md-6 col-lg-4 font-weight-bold mx-auto" *ngFor="let movie of data">
+      <div class="mt-5 movie-card">
+        <img [src]='"http://127.0.0.1:8000/" + movie.image' class="img-fluid shadow-1-strong rounded" alt="Movie Poster" />
+        <div class="overlay">
+          <button class="btn btn-success btn-overlay" data-toggle="modal" data-target="#myModal">Book Ticket</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-10 col-md-5" *ngFor="let movie of data">
+      <div class="mt-5">
+        <h1>{{ movie.movie_name }}</h1>
+        <p>
+          Languages:
+          <span class="badge badge-primary ml-2" *ngFor="let language of movie.language">{{ language }}</span>
+        </p>
+        <p>
+          Genres:
+          <span *ngFor="let genre of movie.genre" class="badge badge-secondary ml-2">{{ genre }}</span>
+        </p>
+        <p>Date: {{ movie.date | date:'mediumDate' }}</p>
+        <p>Time: {{ movie.time }}</p>
+        <p>Duration: {{ movie.duration }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="jumbotron jumbotron-fluid" *ngFor="let movie of data">
+    <div class="container">
+      <h1 class="display-4 text-center">Movie Trailer</h1>
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]="movie.trailer | safe" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">Ticket Booking Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="booking()">
+            <div class="form-group">
+              <label for="branch">Seat</label>
+              <select id="branch" name="branch" [(ngModel)]="seatForm['seat']" (change)="updatePrice()" class="form-control">
+                <option value="diamond">Diamond</option>
+                <option value="gold">Gold</option>
+                <option value="silver">Silver</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="text" id="price" class="form-control" [(ngModel)]="seatForm['price']" [value]="seatForm.price" name="price" required>
+            </div>
+            <div class="form-group">
+              <label for="count">Count:</label>
+              <input type="number" id="count" class="form-control" [(ngModel)]="seatForm['count']" name="count" required>
+            </div>
+            <div class="form-group" *ngFor="let movie of data">
+              <label for="language">Language:</label>
+              <select id="language" class="form-control" [(ngModel)]="seatForm['language']" name="language" required>
+                <option *ngFor="let language of movie.language" [value]="language">{{ language }}</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Pay</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

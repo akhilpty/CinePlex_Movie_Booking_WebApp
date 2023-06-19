@@ -1,0 +1,26 @@
+<div class="container-fluid bg-dark vh-100">
+    <div class="row pt-5">
+      <div class="col-md-5 mx-auto mt-5">
+        <div class="card border-glow">
+          <div class="card-body">
+           <a href="" [routerLink]="['/detail',this.id]" class="text-danger"> <i class="fa fa-arrow-circle-left fa-2xl" aria-hidden="true"></i></a>
+            <h4 class="text-center mb-4">Booking Summary <i class="fa fa-info-circle text-warning" aria-hidden="true"></i></h4>
+            <div class="booking-info text-capitalize" style="font-size: 1.5em;">
+              <p><strong>Movie Name:</strong><span class="float-right">{{data.movie_name}}</span></p>
+              <p><strong>Movie Language:</strong><span class="float-right">{{data.language}}</span></p>
+              <p><strong>Date:</strong><span class="float-right">{{data.date | date:'mediumDate'}}</span></p>
+              <p><strong>Time:</strong><span class="float-right">{{data.time}}</span></p>
+              <p><strong>Seat:</strong><span class="float-right">{{data.seat}} ({{data.price}})</span></p>
+              <p><strong>Count:</strong><span class="float-right">{{data.count}}</span></p>
+              <hr>
+              <p><strong>Total:</strong><span class="float-right"><i class="fa fa-inr" aria-hidden="true"></i> {{data.total}} </span></p>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-primary btn-block" (click)="paybutton()">Confirm Booking</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

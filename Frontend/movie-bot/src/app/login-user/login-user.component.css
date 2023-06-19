@@ -1,0 +1,13 @@
+.card-glow {
+    animation: cardGlow 2s ease-in-out infinite alternate;
+    border-radius: 15px;
+  }
+  
+  @keyframes cardGlow {
+    0% {
+      box-shadow: 0 0 10px #ffffff;
+    }
+    100% {
+      box-shadow: 0 0 10px  #00ff22;
+    }
+  }

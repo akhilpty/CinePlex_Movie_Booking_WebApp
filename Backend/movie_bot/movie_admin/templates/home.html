@@ -1,0 +1,107 @@
+{% extends "mainpages/base.html" %}
+
+
+{% block content %}
+
+
+
+
+<div class="container">
+
+
+
+  
+    <div class="row mb-4  pb-2 ">
+
+
+
+        {%for movie in allMovie %}
+
+        <div class=" col-10 mx-auto col-sm-6 col-lg-3 font-weight-bold ">
+            <div class="mt-5">
+                {% if movie.is_active == 1%}
+                <a href="{%url 'moviedetails' id=movie.id %}" id="statuscont{{movie.id}}">
+                    <img src="{{movie.image.url}}" class="img-fluid shadow-1-strong rounded " alt="Movie Poster" />
+                </a>
+                
+                {% endif %}
+
+            </div>
+
+            <div class="col mt-5">
+                {% if movie.is_active == 1 %}
+                <p class=" mt-2 disablebtn btn btn-danger " id="statusbtn{{movie.id}}" movie_id="{{movie.id}}">Disable
+                </p>
+
+                {% else %}
+                <p class="mt-2 enablebtn btn btn-success" id="statusbtn{{movie.id}}" movie_id="{{movie.id}}">Enable</p>
+                {% endif %}
+
+                <p class="mb-2"><strong>{{movie.movie_name}}</strong></p>
+                Genres:
+                {% for genres in movie.genre.all %}
+                    <span class="badge badge-info">{{ genres }}</span>
+                {% endfor %}
+
+            </div>
+        </div>
+        {%endfor%}
+        
+</div>
+
+</div>
+
+
+
+
+{%block scripts%}
+<script type="text/javascript">
+    $(document).on('click', '.disablebtn', function (e) {
+        e.preventDefault();
+        var movie_id = $(this).attr('movie_id');
+        $.ajax(
+            {
+                type: "POST",
+                url: "{%url 'changestatus'%}",
+                dataType: 'json',
+                data: { action: 'disable', movie: movie_id },
+                success: function (data) {
+
+
+                    $('#statuscont' + movie_id).hide('');
+                    $('#statusbtn' + movie_id).toggleClass('disablebtn enablebtn');
+                    $('#statusbtn' + movie_id).toggleClass('btn-danger btn-success');
+                    $('#statusbtn' + movie_id).text('Enable');
+
+                },
+                error: function () {
+                    alert("server error");
+                }
+            });
+    });
+
+    $(document).on('click', '.enablebtn', function (e) {
+        e.preventDefault();
+        var movie_id = $(this).attr('movie_id');
+        $.ajax(
+            {
+                type: "POST",
+                url: "{%url 'changestatus'%}",
+                dataType: 'json',
+                data: { action: 'enable', movie: movie_id },
+                success: function (data) {
+                    $('#statuscont' + movie_id).show('');
+
+                    $('#statusbtn' + movie_id).toggleClass('enablebtn disablebtn');
+                    $('#statusbtn' + movie_id).toggleClass('btn-success btn-danger');
+                    $('#statusbtn' + movie_id).text('Disable');
+
+                },
+                error: function () {
+                    alert("server error");
+                }
+            });
+    });
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,20 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="row mb-4 pb-2">
+      <div *ngFor="let movie of movies" class="col-10 mx-auto col-sm-6 col-lg-3 font-weight-bold">
+        <div class="mt-5">
+          <a [routerLink]="['detail', movie.id]">
+            <img [src]='"http://127.0.0.1:8000/"+movie.image' class="img-fluid shadow-1-strong rounded" alt="Movie Poster" />
+          </a>
+          <p class="mb-2"><strong>{{movie.movie_name}}</strong></p>
+          Genres:
+        
+          <span class="badge badge-info" *ngFor="let genre of movie.genre" style="margin-right: 5px;">{{ genre }}</span>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  

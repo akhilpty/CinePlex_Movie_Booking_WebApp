@@ -1,0 +1,54 @@
+{% extends 'mainpages/base.html' %}
+
+{% block content %}
+{% if movie.is_active == 1 %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-md-6 col-lg-4 font-weight-bold mx-auto">
+            <div class="mt-5">
+                <img src="{{ movie.image.url }}" class="img-fluid shadow-4-strong rounded float-left" alt="Movie Poster" />
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-10 col-md-5">
+            <div class="mt-5">
+                <h1>{{ movie.movie_name }}</h1>
+                <p>
+                    Languages: 
+                    {% for languages in movie.language.all %}
+                        <span class="badge badge-primary">{{ languages }}</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    Genres: 
+                    {% for genres in movie.genre.all %}
+                        <span class="badge badge-secondary">{{ genres }}</span>
+                    {% endfor %}
+                </p>
+                <p>Date: {{ movie.date }}</p>
+                <p>Time: {{ movie.time }}</p>
+                <p>Duration: {{ movie.duration }}</p>
+                
+                <hr>
+                <a href="{% url 'editmovie' id=movie.id %}" class="btn btn-warning">Edit Movie</a>
+                <hr>
+                <a href="{% url 'deletemovie' id=movie.id %}" class="btn btn-danger">Delete Movie</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 text-center">Movie Trailer</h1>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{{ movie.trailer }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col-sm-10 col-md-6 col-lg-4 font-weight-bold mx-auto">
+    <p class="mt-5">Movie is Not Available. <a href="{% url 'home' %}">Go back</a></p>
+</div>
+{% endif %}
+
+{% endblock %}
